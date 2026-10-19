@@ -9,9 +9,9 @@ data = json.load(pokedex)
 
 # Add a language choice feature and print the pokemons name based on the user input DONE
 
-# Develop a function that creates a new list of pokemon based on the type the user searched for. If no pokemon was found of that type inform the user
+# Develop a function that creates a new list of pokemon based on the type the user searched for. If no pokemon was found of that type inform the user DONE
 
-#Develop a function to find all pokemon matching the name the user searched for. Ex. if "Char" return Charmander, Charmeleon and Charizard. Make the user aware if no pokemon was found. 
+#Develop a function to find all pokemon matching the name the user searched for. Ex. if "Char" return Charmander, Charmeleon and Charizard. Make the user aware if no pokemon was found.  
 
 
 #Based on user input, show all moves that a pokemon could learn based on their type. For example, if Charizard is fire/fyling, show all fire and flying moves. HINT import the moves.json file too!
@@ -20,10 +20,27 @@ def printname():
     for i in range(len(data)):
         print(data[i]["name"][language.lower()])
 def typesearch():
+    usertype = []
     type = input("What type of pokemon would you like to search for? Normal, Fire, Water, Electric, Grass, Ice, Fighting, Poison, Ground, Flying, Psychic, Bug, Rock, Ghost, Dragon, Dark, Steel or Fairy : ")
     for i in range(len(data)):
-        if data[i]["type"] == type:
-            print(data[i]["name"][language.lower()])
-        else:
-            print("error")
-typesearch()
+        for n in range(len(data[i]["type"])):
+            if data[i]["type"][n].lower() == type.lower():
+                usertype.append(data[i]["name"][language.lower()])
+    if len(usertype) == 0:
+        print("No pokemon was found.")
+    print(usertype)
+def namesearch():
+    usernames = []
+    search = input("What pokemon would you like to search for? ")
+    searchlist = list(search)
+    for i in range(len(data)):
+        pokemonname = list(data[i]["name"][language.lower()])
+        pokemonname.insert(0,pokemonname[0].lower())
+        pokemonname.pop(1)
+        if searchlist == pokemonname[0:len(searchlist)]:
+            usernames.append(data[i]["name"][language.lower()])
+    if len(usernames) == 0:
+        print("No pokemon were found.")
+    else:
+        print(usernames)
+namesearch()
